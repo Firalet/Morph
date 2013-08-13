@@ -1,0 +1,62 @@
+﻿<!-- Copyright © 2013 Megan Chiu.  All rights reserved. -->
+<UserControl x:Class="Morph.LevelScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:m="clr-namespace:Morph"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    x:Name="Control">
+
+    <Grid x:Name="LayoutRoot" Background="#444444">
+        <Grid.Resources>
+            <m:BooleanToVisibilityConverter x:Key="BoolToVis" />
+            <m:InverseBooleanToVisibilityConverter x:Key="InvBoolToVis" />
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Levels" HorizontalAlignment="Center" Style="{StaticResource PhoneTextGroupHeaderStyle}" />
+        <c:Pivot Grid.Row="1" x:Name="PivotControl"
+                 ItemsSource="{Binding ElementName=Control, Path=LevelManager.LevelSets}">
+            <c:Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Margin="-10,0,0,-25" Width="440">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="20" />
+                        </Grid.ColumnDefinitions>
+                        <m:ImageButton Grid.Column="1" VerticalAlignment="Center" Click="Back_Click" 
+                                       Uri="/Icons/White/back.png" InvUri="/Icons/Black/back.png" />
+                        <Image Height="64" Width="64" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"
+                               Source="/Icons/lock_lg.png" Visibility="{Binding IsLocked, Converter={StaticResource BoolToVis}}" 
+                               MouseLeftButtonDown="Title_MouseDown" />
+
+                        <TextBlock Text="{Binding Title}" Grid.Column="2" FontSize="64"
+                                   HorizontalAlignment="Center"  Visibility="{Binding IsLocked, Converter={StaticResource InvBoolToVis}}"/>
+                        <m:ImageButton Grid.Column="3" VerticalAlignment="Center" Click="Next_Click"
+                                       Uri="/Icons/White/next.png" InvUri="/Icons/Black/next.png" />
+                    </Grid>
+
+                </DataTemplate>
+            </c:Pivot.HeaderTemplate>
+            <c:Pivot.ItemTemplate>
+                <DataTemplate>
+                    <m:LevelGrid Loaded="LevelScreen_Loaded" SetIndex="{Binding Index}"
+                        LevelManager="{Binding ElementName=Control, Path=LevelManager}"/>
+                </DataTemplate>
+            </c:Pivot.ItemTemplate>
+        </c:Pivot>
+    </Grid>
+</UserControl>

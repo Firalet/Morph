@@ -1,0 +1,41 @@
+﻿<!-- Copyright © 2013 Megan Chiu.  All rights reserved. -->
+<UserControl x:Class="Morph.ClickableSquare"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480"
+    x:Name="ClickableSquareControl">
+
+    <Grid x:Name="LayoutRoot">
+        <Button Click="Button_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button.Background>
+                <SolidColorBrush Color="{Binding Path=BackgroundColor, 
+                    ElementName=ClickableSquareControl}"/>
+            </Button.Background>
+            <Button.Foreground>
+                <SolidColorBrush Color="{Binding Path=ForegroundColor, 
+                    ElementName=ClickableSquareControl}"/>
+            </Button.Foreground>
+            <Button.BorderBrush>
+                <SolidColorBrush Color="{Binding Path=ForegroundColor, 
+                    ElementName=ClickableSquareControl}"/>
+            </Button.BorderBrush>
+            <Button.Content>
+                <Grid>
+                    <TextBlock Text="{Binding Path=Text, ElementName=ClickableSquareControl}" />
+                    <Image Source="{Binding Path=Uri, ElementName=ClickableSquareControl}"
+                           Visibility="{Binding Path=IconVisibility, ElementName=ClickableSquareControl}"
+                           Height="40" Width="40"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                </Grid>
+            </Button.Content>
+        </Button>
+
+    </Grid>
+</UserControl>

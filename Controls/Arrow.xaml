@@ -1,0 +1,25 @@
+﻿<!-- Copyright © 2013 Megan Chiu.  All rights reserved. -->
+<UserControl x:Class="Morph.Arrow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="50" d:DesignWidth="100">
+    <Grid x:Name="LayoutRoot">
+        <Rectangle Height="2" Width="90" Fill="White" />
+        <Rectangle Height="2" Width="15" Fill="White" HorizontalAlignment="Right">
+            <Rectangle.RenderTransform>
+                <RotateTransform Angle="45" CenterX="15" />
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Height="2" Width="15" Fill="White" HorizontalAlignment="Right">
+            <Rectangle.RenderTransform>
+                <RotateTransform Angle="-45" CenterX="15" />
+            </Rectangle.RenderTransform>
+        </Rectangle>
+    </Grid>
+</UserControl>

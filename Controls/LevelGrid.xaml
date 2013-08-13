@@ -1,0 +1,47 @@
+﻿<!-- Copyright © 2013 Megan Chiu.  All rights reserved. -->
+<UserControl x:Class="Morph.LevelGrid"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:m="clr-namespace:Morph"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480"
+    x:Name="LevelScreenControl">
+
+    <Grid x:Name="LayoutRoot" Background="#444444">
+        <Grid.Resources>
+            <m:BooleanToVisibilityConverter x:Key="BoolToVis" />
+            <m:InverseBooleanToVisibilityConverter x:Key="InvBoolToVis" />
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ItemsControl ItemsSource="{Binding ElementName=LevelScreenControl, 
+                      Path=Levels}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <m:SquareGrid Size="5" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <m:ClickableSquare 
+                            BackgroundColor="{Binding BackgroundColor}"
+                            ForegroundColor="White"
+                            Text="{Binding LevelTitle}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch" 
+                            IsEnabled="{Binding Unlocked}"
+                            />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

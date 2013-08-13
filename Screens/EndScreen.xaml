@@ -1,0 +1,35 @@
+﻿<!-- Copyright © 2013 Megan Chiu.  All rights reserved. -->
+<UserControl x:Class="Morph.EndScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:m="clr-namespace:Morph"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+
+    <Grid x:Name="LayoutRoot" Background="Black">
+        <Border 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <StackPanel Orientation="Vertical" Margin="10">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="FontSize" Value="26" />
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="Level Set Complete!" />
+                <TextBlock Text="Next Set..." />
+                <m:ImageButton Height="48" Width="48" Click="Button_Click"
+                                Uri="/Icons/White/next.png"
+                                InvUri="/Icons/Black/next.png"/>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</UserControl>

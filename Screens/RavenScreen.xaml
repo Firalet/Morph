@@ -1,0 +1,115 @@
+﻿<!-- Copyright © 2013 Megan Chiu.  All rights reserved. -->
+<UserControl x:Class="Morph.RavenScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:m="clr-namespace:Morph"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480"
+    x:Name="Control">
+
+    <Grid x:Name="LayoutRoot" Background="Black"
+          HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.Resources>
+            <Storyboard x:Name="RavenFadeIn">
+                <DoubleAnimation Storyboard.TargetName="Question"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0.0" To="1.0" Duration="0:0:2" />
+                <DoubleAnimation Storyboard.TargetName="Answer"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0.0" To="1.0" Duration="0:0:2" />
+            </Storyboard>
+            <Storyboard x:Name="ScoreFadeTransition">
+                <DoubleAnimation Storyboard.TargetName="Question"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1.0" To="0.0" Duration="0:0:2" />
+                <DoubleAnimation Storyboard.TargetName="Answer"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1.0" To="0.0" Duration="0:0:2" />
+                <DoubleAnimationUsingKeyFrames
+                    Storyboard.TargetName="Score"
+                    Storyboard.TargetProperty="Opacity">
+                    <LinearDoubleKeyFrame KeyTime="0:0:2" Value="0.0"/>
+                    <LinearDoubleKeyFrame KeyTime="0:0:4" Value="1.0"/>
+                    <LinearDoubleKeyFrame KeyTime="0:0:6" Value="1.0"/>
+                    <LinearDoubleKeyFrame KeyTime="0:0:8" Value="0.0"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" Source="/Icons/raven.png" Height="75" Width="94"/>
+
+        <!--Question-->
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding ElementName=Control, 
+                Path=CurrentLevel.QuestionGrid}" x:Name="Question">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <m:SquareGrid Size="{Binding ElementName=Control, 
+                                        Path=CurrentLevel.GridSize}"
+                                  Height="300" Width="300"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <m:ClickableSquare Uri="{Binding Path=Uri}"
+                                           IconVisibility="Visible"
+                                           BackgroundColor="{Binding Path=Color}"
+                                           ForegroundColor="{Binding Path=Color}"
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Stretch" 
+                                           Height="100" Width="100"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!--Answer-->
+        <ItemsControl Grid.Row="3" ItemsSource="{Binding ElementName=Control, 
+                Path=CurrentLevel.AnswerGrid}" x:Name="Answer"
+                VerticalAlignment="Bottom">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Height="100"
+                                HorizontalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <m:ClickableSquare
+                                    Uri="{Binding Path=Uri}"
+                                    IconVisibility="Visible"
+                                    BackgroundColor="{Binding Path=Color}"
+                                    ForegroundColor="{Binding Path=Color}"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Height="100" Width="100"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!--Score-->
+        <Border Grid.Row="1" Grid.RowSpan="2" Visibility="Collapsed" x:Name="Score"
+                VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="64" />
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="{Binding ElementName=Control, Path=CorrectAnswers}" />
+                <TextBlock Text=" / " />
+                <TextBlock Text="{Binding ElementName=Control, Path=Levels.Count}" />
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</UserControl>

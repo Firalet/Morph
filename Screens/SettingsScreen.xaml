@@ -1,0 +1,137 @@
+﻿<!-- Copyright © 2013 Megan Chiu.  All rights reserved. -->
+<UserControl x:Class="Morph.SettingsScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:m="clr-namespace:Morph"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    x:Name="Control">
+    <UserControl.Resources>
+        <Storyboard x:Name="RavenAnimationFadeIn">
+            <DoubleAnimation
+                            Storyboard.TargetName="Raven"
+                            Storyboard.TargetProperty="Opacity"
+                            From="0.0" To="1.0" Duration="0:0:2" />
+        </Storyboard>
+        <Storyboard x:Name="RavenAnimationFadeOut">
+            <DoubleAnimationUsingKeyFrames
+                            Storyboard.TargetName="Raven"
+                            Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame Value="1.0" KeyTime="0:0:0" />
+                <LinearDoubleKeyFrame Value="0.0" KeyTime="0:0:2" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames
+                            Storyboard.TargetName="Control"
+                            Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame Value="1.0" KeyTime="0:0:0" />
+                <LinearDoubleKeyFrame Value="1.0" KeyTime="0:0:2" />
+                <LinearDoubleKeyFrame Value="0.0" KeyTime="0:0:3" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="#444444" VerticalAlignment="Stretch">
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="FontSize"  Value="26" />
+            </Style>
+            <m:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Settings" HorizontalAlignment="Center" Grid.ColumnSpan="2"
+                   Style="{StaticResource PhoneTextGroupHeaderStyle}" />
+
+        <!--checkbox for color blind enable-->
+        <m:UseableCheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                           IsChecked="{Binding ElementName=Control, Mode=TwoWay, Path=GameSettings.EnableColorblindOption}"
+                           Content="Show Symbols"
+                           x:Name="ShowCheckbox"/>
+
+        <!--color blind input-->
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <!--radio buttons for icon set-->
+            <ItemsControl Grid.Row="2" Grid.Column="1"
+                          x:Name="iconSetButtons"
+                      ItemsSource="{Binding ElementName=Control, Path=StandardIcons.IconSetStrings}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <m:UseableRadioButton GroupName="setGroup"
+                            Checked="Set_Checked"
+                            Loaded="Set_Loaded"
+                            Content="{Binding}" Margin="0" Padding="0">
+                        </m:UseableRadioButton>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Rectangle Fill="White" />
+            <!--radio buttons for icon contrast-->
+            <ItemsControl Grid.Row="3" Grid.Column="3"
+                          x:Name="iconContrastButtons"
+                      ItemsSource="{Binding ElementName=Control, Path=StandardIcons.IconContrastStrings}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <m:UseableRadioButton GroupName="contrastGroup"
+                                              Loaded="Contrast_Loaded"
+                            Checked="Contrast_Checked"
+                            Content="{Binding}" Margin="0" Padding="0" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+
+        <!--Easter Egg-->
+        <Grid Grid.Row="7" Grid.ColumnSpan="2">
+            <m:ClickableSquare Height="88" Width="88" Text="R" x:Name="Raven" 
+                               BackgroundColor="Black" Foreground="White"
+                               OnClick="Raven_Click" 
+                               Visibility="{Binding ElementName=Control, Path=Trigger,
+                               Converter={StaticResource BoolToVisConv}}"/>
+        </Grid>
+
+        <!--Example Squares-->
+        <ItemsControl Grid.Row="8" Grid.ColumnSpan="2" 
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Bottom"
+                      ItemsSource="{Binding ElementName=Control, Path=GameSettings.ExampleSquares}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <m:ClickableSquare BackgroundColor="{Binding Color}"
+                                       ForegroundColor="{Binding Color}"
+                                       Uri="{Binding Uri}"
+                                       Height="90" Width="90"
+                                       IconVisibility="{Binding ElementName=Control, 
+                        Path=GameSettings.EnableColorblindOption, Converter={StaticResource BoolToVisConv}}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

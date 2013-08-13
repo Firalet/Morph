@@ -1,0 +1,61 @@
+﻿<!-- Copyright © 2013 Megan Chiu.  All rights reserved. -->
+<UserControl x:Class="Morph.AboutScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:m="clr-namespace:Morph"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+
+    <Grid x:Name="LayoutRoot" Background="#444444">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="About" Grid.Row="1" Opacity="0.5"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+        <Image Height="62" Width="62"  Grid.Row="3"
+               Source="..\Icons\app.png" />
+        
+        <TextBlock Text="Morph" FontSize="64"  Grid.Row="5"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+        <Viewbox Grid.Row="7" HorizontalAlignment="Center" Height="100">
+            <Viewbox.RenderTransform>
+                <RotateTransform Angle="90" CenterX="50" CenterY="50" />
+            </Viewbox.RenderTransform>
+            <m:Arrow Height="100" Width="100" MouseLeftButtonDown="Arrow_MouseLeftButtonDown"  />
+        </Viewbox>
+
+        <StackPanel Grid.Row="9" HorizontalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Opacity" Value="0.5" />
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock Text="Version 1.0" HorizontalAlignment="Center"/>
+            <TextBlock Text="For WP 7.5" HorizontalAlignment="Center"/>
+            <TextBlock Text="Created by M. Chiu" HorizontalAlignment="Center"/>
+            <TextBlock Text="Copyright 2013" HorizontalAlignment="Center"/>
+            <TextBlock Text="All rights reserved" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
